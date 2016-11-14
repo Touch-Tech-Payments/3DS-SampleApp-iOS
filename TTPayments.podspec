@@ -9,12 +9,12 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = 'The TouchTech Push iOS SDK, for integrating TouchTech Push into your iOS application. The SDK supports iOS 9.3.'
+  s.description      = 'The TouchTech Payments iOS SDK, for integrating TouchTech Payments authentication into your iOS application. The SDK supports iOS 9.3.'
 
-  s.homepage         = 'https://github.com/Touch-Tech-Payments/iOS-SDK'
+  s.homepage         = 'https://github.com/Touch-Tech-Payments/ttpayments-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { "David Parsons"=>"dave@touchtechpayments.com"}
-  s.source           = { :http => "https://github.com/Touch-Tech-Payments/ttpayments-ios/releases/download/0.0.1/TTPayments.zip"}
+  s.source           = { :http => "https://github.com/Touch-Tech-Payments/ttpayments-ios/releases/download/0.1.0/TTPayments.zip"}
 
   s.ios.deployment_target = '9.3'
 
@@ -29,6 +29,6 @@ Pod::Spec.new do |s|
   s.dependency 'Realm', '~> 1.1.0'
   s.dependency 'RealmSwift', '~> 1.1.0'
 
-  s.vendored_frameworks = 'TTPayments/TTPayments.framework'
+  s.ios.vendored_frameworks = 'TTPayments/TTPayments.framework'
 
 end
