@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.author           = { "David Parsons"=>"dave@touchtechpayments.com"}
   s.source           = { :http => "https://github.com/Touch-Tech-Payments/ttpayments-ios/releases/download/0.1.0/TTPayments.zip"}
 
-  s.ios.deployment_target = '9.3'
+  s.platform          = :ios
 
   # s.resource_bundles = {
   #   'TouchtechTAP' => ['TouchtechTAP/Assets/*.png']
@@ -29,6 +29,7 @@ Pod::Spec.new do |s|
   s.dependency 'Realm', '~> 1.1.0'
   s.dependency 'RealmSwift', '~> 1.1.0'
 
-  s.ios.vendored_frameworks = 'TTPayments/TTPayments.framework'
+  s.ios.deployment_target = '9.3'
+  s.ios.vendored_frameworks = 'TTPayments.framework'
 
 end
