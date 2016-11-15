@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'TTPayments'
   s.version          = '0.1.0'
-  s.summary          = 'The Touchtech Push iOS SDK, for integrating TouchTech Login into your iOS application.'
+  s.summary          = 'The Touchtech Payments iOS SDK, for integrating TouchTech Payments authentication into your iOS application.'
 
   s.description      = 'The TouchTech Payments iOS SDK, for integrating TouchTech Payments authentication into your iOS application. The SDK supports iOS 9.3.'
 
