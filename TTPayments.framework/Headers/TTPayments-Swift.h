@@ -141,27 +141,33 @@ typedef SWIFT_ENUM(NSInteger, Scheme) {
   SchemeJcb = 3,
   SchemeDiscover = 4,
   SchemeMaestro = 5,
+  SchemeUnrecognised = 6,
+  SchemeAmbiguous = 7,
 };
 
 @protocol TTPinEntryDelegate;
-@class TAPCard;
+@protocol TTPushTokenDataSource;
 @protocol TAPCallback;
+@class TAPCard;
 @class Token;
+@class NSError;
 
 SWIFT_CLASS("_TtC10TTPayments3TAP")
 @interface TAP : NSObject
 @property (nonatomic, strong) id <TTPinEntryDelegate> _Nullable pinDelegate;
+@property (nonatomic, strong) id <TTPushTokenDataSource> _Nullable pushTokenDataSource;
 + (TAP * _Nonnull)getInstanceWithApiKey:(NSString * _Nonnull)apiKey;
+- (void)checkVersionWithCallback:(id <TAPCallback> _Nonnull)callback;
+- (void)requestDacWithCardNumber:(NSString * _Nonnull)cardNumber callback:(id <TAPCallback> _Nonnull)callback;
 - (void)registerCard:(TAPCard * _Nonnull)tapCard dac:(DAC * _Nonnull)dac callback:(id <TAPCallback> _Nonnull)callback;
 - (void)authenticate:(TAPCard * _Nonnull)tapCard token:(Token * _Nonnull)token callback:(id <TAPCallback> _Nonnull)callback;
 - (void)unregisterCard:(TAPCard * _Nonnull)tapCard callback:(id <TAPCallback> _Nonnull)callback;
 - (void)decline:(Token * _Nonnull)token callback:(id <TAPCallback> _Nonnull)callback;
 - (NSArray<TAPCard *> * _Nonnull)getCards;
-- (void)requestDacWithCardNumber:(NSString * _Nonnull)cardNumber callback:(id <TAPCallback> _Nonnull)callback;
+- (void)checkForBlockedCardsWithCards:(NSArray<TAPCard *> * _Nonnull)cards onCompletion:(void (^ _Nonnull)(NSArray<TAPCard *> * _Nonnull, NSError * _Nullable))onCompletion;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
-@class NSError;
 
 SWIFT_PROTOCOL("_TtP10TTPayments11TAPCallback_")
 @protocol TAPCallback
@@ -172,12 +178,13 @@ SWIFT_PROTOCOL("_TtP10TTPayments11TAPCallback_")
 
 SWIFT_CLASS("_TtC10TTPayments7TAPCard")
 @interface TAPCard : NSObject
-- (nonnull instancetype)initWithPan:(NSString * _Nonnull)pan expiry:(NSString * _Nonnull)expiry scheme:(enum Scheme)scheme method:(enum AuthMethod)method OBJC_DESIGNATED_INITIALIZER;
 - (NSString * _Nonnull)getPanTruncated;
 - (NSInteger)getPanLength;
 - (NSString * _Nonnull)getToken;
+- (NSString * _Nonnull)getBic;
 - (NSString * _Nonnull)getExpiry;
 - (enum Scheme)getScheme;
+- (BOOL)isBlocked;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -185,11 +192,24 @@ SWIFT_CLASS("_TtC10TTPayments7TAPCard")
 SWIFT_PROTOCOL("_TtP10TTPayments18TTPinEntryDelegate_")
 @protocol TTPinEntryDelegate
 /**
+  Returns a boolean value to decide between using TouchID(if available) or pin entry.
+
+  returns:
+  Boolean value to decide between TouchID or pin entry
+*/
+- (BOOL)useTouchId;
+/**
   Area to prompt for PIN from user.
   \param processPin callback to pass PIN to once retrieved
 
 */
 - (void)promptForPin:(void (^ _Nonnull)(NSString * _Nonnull))processPin;
+@end
+
+
+SWIFT_PROTOCOL("_TtP10TTPayments21TTPushTokenDataSource_")
+@protocol TTPushTokenDataSource
+- (NSString * _Nullable)getToken;
 @end
 
 
