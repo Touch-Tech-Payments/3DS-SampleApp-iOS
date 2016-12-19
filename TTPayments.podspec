@@ -18,6 +18,5 @@ Pod::Spec.new do |s|
   s.dependency 'RealmSwift', '~> 2.1'
 
   s.ios.deployment_target = '9.3'
-  s.ios.vendored_frameworks = 'TTPayments.framework'
 
 end
