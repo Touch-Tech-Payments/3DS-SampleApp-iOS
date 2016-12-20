@@ -1,0 +1,10 @@
+framework module TTPayments {
+  umbrella header "TTPayments.h"
+
+  export *
+  module * { export * }
+}
+
+module TTPayments.Swift {
+    header "TTPayments-Swift.h"
+}
